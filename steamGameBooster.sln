@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "steamGameBooster", "steamGameBooster\steamGameBooster.csproj", "{162D7E0F-E536-4D3D-93D4-61E00081B187}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "steamGameControl", "steamGameControl\steamGameControl.csproj", "{58473A79-5178-4B8B-ABBC-F784F46D9F8C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{162D7E0F-E536-4D3D-93D4-61E00081B187}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{162D7E0F-E536-4D3D-93D4-61E00081B187}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{162D7E0F-E536-4D3D-93D4-61E00081B187}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58473A79-5178-4B8B-ABBC-F784F46D9F8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58473A79-5178-4B8B-ABBC-F784F46D9F8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58473A79-5178-4B8B-ABBC-F784F46D9F8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58473A79-5178-4B8B-ABBC-F784F46D9F8C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
