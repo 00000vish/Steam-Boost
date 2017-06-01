@@ -47,17 +47,20 @@ namespace steamGameBooster
             }
         }
 
+        //start the game double clicked in the list view
         private void listView1_DoubleClick(object sender, EventArgs e)
         {
             endAllIdleProcess();
             Process.Start(new ProcessStartInfo("steamGameControl.exe", listView1.SelectedItems[0].SubItems[1].Text) { WindowStyle = ProcessWindowStyle.Hidden });
         }
 
+        //kill all the idle process when form program is closing
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             endAllIdleProcess();
         }
 
+        //add game id to array when listview item is checked
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             if (checkBox1.Checked)
@@ -77,6 +80,7 @@ namespace steamGameBooster
             //todo: it seems like iteams are being added to list more than once 
         }
 
+        //controls the game idleing process
         private void gameIdler()
         {
             do
@@ -95,6 +99,7 @@ namespace steamGameBooster
             } while (!checkBox2.Checked);
         }
 
+        //start idleing button
         private void button1_Click(object sender, EventArgs e)
         {
             if (button1.Text == "Stop idleing")
@@ -112,6 +117,7 @@ namespace steamGameBooster
             }
         }
 
+        //when listview item is checked
         private void listView1_ItemChecked(object sender, ItemCheckedEventArgs e)
         {
             foreach (ListViewItem item in listView1.Items)
@@ -127,6 +133,7 @@ namespace steamGameBooster
             }
         }
 
+        //when simultaneously is checked
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
             if (checkBox2.Checked)
@@ -138,11 +145,6 @@ namespace steamGameBooster
                 domainUpDown1.Enabled = true;
 
             }
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }
