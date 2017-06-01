@@ -38,18 +38,22 @@ namespace steamGameBooster
             {
                 process.Kill();
             }
-            pictureBox1.Invoke(new Action(() => {
-                pictureBox1.Visible = false;
-                pictureBox1.Refresh();
-            }));
-            linkLabel1.Invoke(new Action(() => {
-                linkLabel1.Text = "";
-            }));
-        }      
+            try
+            {
+                pictureBox1.Invoke(new Action(() =>
+                {
+                    groupBox2.Visible = false;
+                    pictureBox1.Refresh();
+                    linkLabel1.Text = "";
+                }));
+            }
+            catch (Exception e) { };
+        }
 
         //kill all the idle process when form program is closing
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
+            if (childThread != null)childThread.Abort();
             endAllIdleProcess();
         }
 
@@ -79,24 +83,30 @@ namespace steamGameBooster
             {
                 foreach (string item in toIdleList)
                 {
-                    pictureBox1.Invoke(new Action(() => {
-                        pictureBox1.Visible = true;
-                        pictureBox1.BackColor = System.Drawing.Color.Black;
-                        pictureBox1.Load("http://cdn.akamai.steamstatic.com/steam/apps/" + item + "/header.jpg");
-                    }));
-                    linkLabel1.Invoke(new Action(() => {
-                        linkLabel1.Links.Clear();
-                        linkLabel1.Text = "Visit " + listView1.FindItemWithText(item).SubItems[2].Text + " Store Page";
-                        linkLabel1.Links.Add(0, linkLabel1.Text.Length, "http://store.steampowered.com/app/" + item);
-                    }));
+                    try
+                    {
+                        pictureBox1.Invoke(new Action(() =>
+                        {
+                            button2.Tag = item;
+                            groupBox2.Visible = true;
+                            pictureBox1.BackColor = System.Drawing.Color.Black;
+                            pictureBox1.Load("http://cdn.akamai.steamstatic.com/steam/apps/" + item + "/header.jpg");
+                            linkLabel1.Links.Clear();
+                            string gameName = listView1.FindItemWithText(item).SubItems[2].Text;
+                            linkLabel1.Text = "Visit Store Page for " + gameName;
+                            if (gameName.Length > 11) linkLabel1.Text = "Visit Store Page for " + gameName.Substring(0, 12) + Environment.NewLine + gameName.Substring(11, gameName.Length - 11);
+                            linkLabel1.Links.Add(0, linkLabel1.Text.Length, "http://store.steampowered.com/app/" + item);
+                        }));
+                    }
+                    catch (Exception e) { };
                     Process.Start(new ProcessStartInfo("steamGameControl.exe", item) { WindowStyle = ProcessWindowStyle.Hidden });
                     int x = 0;
                     Int32.TryParse(domainUpDown1.Text, out x);
-                   
+
                     if (!checkBox2.Checked)
                     {
                         System.Threading.Thread.Sleep(x);
-                        endAllIdleProcess();                        
+                        endAllIdleProcess();
                     }
                 }
             } while (!checkBox2.Checked);
@@ -116,7 +126,7 @@ namespace steamGameBooster
                 toIdleList.Clear();
                 foreach (ListViewItem item in listView1.Items)
                 {
-                    if(item.Checked)toIdleList.Add(item.SubItems[1].Text);
+                    if (item.Checked) toIdleList.Add(item.SubItems[1].Text);
                 }
 
                 button1.Text = "Stop idleing";
@@ -140,9 +150,19 @@ namespace steamGameBooster
             }
         }
 
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(e.Link.LinkData.ToString());
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(button2.Tag.ToString());
         }
     }
 }
