@@ -79,6 +79,15 @@ namespace steamGameBooster
         //controls the game idleing process
         private void gameIdler()
         {
+            int v = 0; Int32.TryParse(domainUpDown1.Text, out v);
+            v = ((v * 60000));
+            MessageBox.Show(v.ToString() + " " + toIdleList.Count);
+            pictureBox1.Invoke(new Action(() => {
+                timer1.Enabled = true;
+                timer1.Interval = v;
+                timer1.Start();
+            }));
+
             do
             {
                 foreach (string item in toIdleList)
@@ -104,16 +113,8 @@ namespace steamGameBooster
                     Int32.TryParse(domainUpDown1.Text, out x);
                     if (!checkBox2.Checked)
                     {
-                        System.Threading.Thread.Sleep((x * 6000)/toIdleList.Count);
+                        System.Threading.Thread.Sleep((x * 60000)/toIdleList.Count);
                         endAllIdleProcess();
-                    }
-                    else
-                    {
-                        int v = 0; Int32.TryParse(domainUpDown1.Text, out v);
-                        v = ((v * 6000) / toIdleList.Count);
-                        timer1.Enabled = true;
-                        timer1.Interval = v;
-                        timer1.Start();
                     }
                 }
             } while (!checkBox2.Checked);
@@ -176,7 +177,6 @@ namespace steamGameBooster
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            MessageBox.Show("Test");
             if(button1.Text == "Stop idleing")button1.PerformClick();
             timer1.Stop();
         }
