@@ -22,7 +22,7 @@ namespace steamGameBooster
         //reads the text file with all the games in it
         private void readAllGames()
         {
-            string[] gameList = System.IO.File.ReadAllLines("game-list.txt");
+            string[] gameList = System.IO.File.ReadAllLines(Program.GAME_LIST_FILE);
             foreach (string game in gameList)
             {
                 ListViewItem l1 = listView1.Items.Add("");
@@ -34,7 +34,7 @@ namespace steamGameBooster
         //kill all the process of idler
         private void endAllIdleProcess()
         {
-            foreach (var process in Process.GetProcessesByName("steamGameControl"))
+            foreach (var process in Process.GetProcessesByName(Program.EXTENDER_NAME))
             {
                 process.Kill();
             }
@@ -109,7 +109,7 @@ namespace steamGameBooster
                     }
                     catch (Exception e) { };
 
-                    Process.Start(new ProcessStartInfo("steamGameControl.exe", item) { WindowStyle = ProcessWindowStyle.Hidden });
+                    Process.Start(new ProcessStartInfo(Program.EXTENDER_NAME + ".exe", item) { WindowStyle = ProcessWindowStyle.Hidden });
 
                     if (!checkBox2.Checked) //simultaneously unlchecked
                     {

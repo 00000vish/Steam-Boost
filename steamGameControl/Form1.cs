@@ -28,15 +28,3 @@ namespace steamGameControl
         }
     }
 }
-
-
-
-//long appId = long.Parse(args[0]);
-//long appId = 282070;
-//Environment.SetEnvironmentVariable("SteamAppId", appId.ToString());
-//if (!SteamAPI.Init())
-//{
-//    return;
-//}
-//var games = GetGames();
-

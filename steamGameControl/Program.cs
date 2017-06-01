@@ -15,18 +15,16 @@ namespace steamGameControl
         [STAThread]
         static void Main(string[] args)
         {
-            if (args[0] == "gamelist")
+            args = new string[] { "gamelist" };
+            if (args.Length == 0)
             {
-                Environment.SetEnvironmentVariable("SteamAppId", "440");
-                if (!SteamAPI.Init()) { }
-                var games = GetGames();
-                SteamAPI.Shutdown();
-                string[] gameList = new string[games.Count];
-                for (int i = 0; i < games.Count; i++)
-                {
-                    gameList[i] = games[i].ID + "`" + games[i].Name;
-                }
-                System.IO.File.WriteAllLines("game-list.txt", gameList);
+                MessageBox.Show("Run the main program", "Opps...", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else if (args[0] == "gamelist")
+            {
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(new Form2());              
             }
             else
             {
@@ -39,7 +37,6 @@ namespace steamGameControl
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(new Form1(args[0]));
             }
-
         }
 
         public static List<Game> GetGames()
