@@ -157,12 +157,19 @@ namespace steamGameBooster
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            //nothing
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(button2.Tag.ToString());
+            //<TODO>: STEAM UNLOCK ACHIEMENTS!
+            //MessageBox.Show(button2.Tag.ToString());
+        }
+
+        private void listView1_DoubleClick(object sender, EventArgs e)
+        {
+            //<TODO>: STEAM UNLOCK ACHIEMENTS!
+            //MessageBox.Show(button2.Tag.ToString());
         }
     }
 }
