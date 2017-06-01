@@ -102,11 +102,18 @@ namespace steamGameBooster
                     Process.Start(new ProcessStartInfo("steamGameControl.exe", item) { WindowStyle = ProcessWindowStyle.Hidden });
                     int x = 0;
                     Int32.TryParse(domainUpDown1.Text, out x);
-
                     if (!checkBox2.Checked)
                     {
-                        System.Threading.Thread.Sleep(x);
+                        System.Threading.Thread.Sleep((x * 6000)/toIdleList.Count);
                         endAllIdleProcess();
+                    }
+                    else
+                    {
+                        int v = 0; Int32.TryParse(domainUpDown1.Text, out v);
+                        v = ((v * 6000) / toIdleList.Count);
+                        timer1.Enabled = true;
+                        timer1.Interval = v;
+                        timer1.Start();
                     }
                 }
             } while (!checkBox2.Checked);
@@ -139,15 +146,10 @@ namespace steamGameBooster
         //when simultaneously is checked
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
-            if (checkBox2.Checked)
+            if (!checkBox2.Checked)
             {
-                domainUpDown1.Enabled = false;
-            }
-            else
-            {
-                domainUpDown1.Enabled = true;
-
-            }
+                MessageBox.Show(this,"The time you enter will be evenly divided for each game.","Steam Boost",MessageBoxButtons.OK,MessageBoxIcon.Information);
+            }          
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -170,6 +172,13 @@ namespace steamGameBooster
         {
             //<TODO>: STEAM UNLOCK ACHIEMENTS!
             //MessageBox.Show(button2.Tag.ToString());
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            MessageBox.Show("Test");
+            if(button1.Text == "Stop idleing")button1.PerformClick();
+            timer1.Stop();
         }
     }
 }

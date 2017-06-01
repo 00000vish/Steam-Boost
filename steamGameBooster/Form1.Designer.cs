@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.listView1 = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -43,6 +44,7 @@
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.button2 = new System.Windows.Forms.Button();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -109,15 +111,17 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(196, 53);
+            this.label2.Location = new System.Drawing.Point(189, 54);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(20, 13);
+            this.label2.Size = new System.Drawing.Size(28, 13);
             this.label2.TabIndex = 7;
-            this.label2.Text = "ms";
+            this.label2.Text = "mins";
             // 
             // checkBox2
             // 
             this.checkBox2.AutoSize = true;
+            this.checkBox2.Checked = true;
+            this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBox2.Location = new System.Drawing.Point(120, 26);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(96, 17);
@@ -138,30 +142,51 @@
             // 
             // domainUpDown1
             // 
-            this.domainUpDown1.Items.Add("5000");
-            this.domainUpDown1.Items.Add("6000");
-            this.domainUpDown1.Items.Add("7000");
-            this.domainUpDown1.Items.Add("8000");
-            this.domainUpDown1.Items.Add("9000");
-            this.domainUpDown1.Items.Add("11000");
-            this.domainUpDown1.Items.Add("12000");
-            this.domainUpDown1.Items.Add("13000");
-            this.domainUpDown1.Items.Add("14000");
-            this.domainUpDown1.Items.Add("15000");
-            this.domainUpDown1.Location = new System.Drawing.Point(120, 51);
+            this.domainUpDown1.Items.Add("1");
+            this.domainUpDown1.Items.Add("2");
+            this.domainUpDown1.Items.Add("3");
+            this.domainUpDown1.Items.Add("3");
+            this.domainUpDown1.Items.Add("4");
+            this.domainUpDown1.Items.Add("5");
+            this.domainUpDown1.Items.Add("6");
+            this.domainUpDown1.Items.Add("7");
+            this.domainUpDown1.Items.Add("8");
+            this.domainUpDown1.Items.Add("9");
+            this.domainUpDown1.Items.Add("10");
+            this.domainUpDown1.Items.Add("11");
+            this.domainUpDown1.Items.Add("12");
+            this.domainUpDown1.Items.Add("13");
+            this.domainUpDown1.Items.Add("14");
+            this.domainUpDown1.Items.Add("15");
+            this.domainUpDown1.Items.Add("16");
+            this.domainUpDown1.Items.Add("17");
+            this.domainUpDown1.Items.Add("18");
+            this.domainUpDown1.Items.Add("19");
+            this.domainUpDown1.Items.Add("20");
+            this.domainUpDown1.Items.Add("21");
+            this.domainUpDown1.Items.Add("22");
+            this.domainUpDown1.Items.Add("23");
+            this.domainUpDown1.Items.Add("24");
+            this.domainUpDown1.Items.Add("25");
+            this.domainUpDown1.Items.Add("26");
+            this.domainUpDown1.Items.Add("27");
+            this.domainUpDown1.Items.Add("28");
+            this.domainUpDown1.Items.Add("29");
+            this.domainUpDown1.Items.Add("30");
+            this.domainUpDown1.Location = new System.Drawing.Point(111, 52);
             this.domainUpDown1.Name = "domainUpDown1";
-            this.domainUpDown1.Size = new System.Drawing.Size(74, 20);
+            this.domainUpDown1.Size = new System.Drawing.Size(77, 20);
             this.domainUpDown1.TabIndex = 4;
-            this.domainUpDown1.Text = "7000";
+            this.domainUpDown1.Text = "30";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(16, 55);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(99, 13);
+            this.label1.Size = new System.Drawing.Size(89, 13);
             this.label1.TabIndex = 3;
-            this.label1.Text = "Game switch delay:";
+            this.label1.Text = "Stop idleing after:";
             // 
             // groupBox2
             // 
@@ -181,8 +206,10 @@
             this.linkLabel1.AutoSize = true;
             this.linkLabel1.Location = new System.Drawing.Point(314, 27);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(0, 13);
+            this.linkLabel1.Size = new System.Drawing.Size(27, 13);
             this.linkLabel1.TabIndex = 1;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "Link";
             this.linkLabel1.VisitedLinkColor = System.Drawing.Color.Blue;
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
@@ -205,6 +232,10 @@
             this.button2.Text = "Unlock Achievements";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // Form1
             // 
@@ -244,6 +275,7 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 
