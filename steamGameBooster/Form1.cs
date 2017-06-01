@@ -38,14 +38,14 @@ namespace steamGameBooster
             {
                 process.Kill();
             }
-        }
-
-        //start the game double clicked in the list view
-        private void listView1_DoubleClick(object sender, EventArgs e)
-        {
-            endAllIdleProcess();
-            Process.Start(new ProcessStartInfo("steamGameControl.exe", listView1.SelectedItems[0].SubItems[1].Text) { WindowStyle = ProcessWindowStyle.Hidden });
-        }
+            pictureBox1.Invoke(new Action(() => {
+                pictureBox1.Visible = false;
+                pictureBox1.Refresh();
+            }));
+            linkLabel1.Invoke(new Action(() => {
+                linkLabel1.Text = "";
+            }));
+        }      
 
         //kill all the idle process when form program is closing
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
@@ -62,11 +62,6 @@ namespace steamGameBooster
                 {
                     item.Checked = true;
                 }
-                toIdleList.Clear();
-                foreach (ListViewItem item in listView1.Items)
-                {
-                    toIdleList.Add(item.SubItems[1].Text);
-                }
             }
             else
             {
@@ -74,7 +69,6 @@ namespace steamGameBooster
                 {
                     item.Checked = false;
                 }
-                toIdleList.Clear();
             }
         }
 
@@ -85,13 +79,24 @@ namespace steamGameBooster
             {
                 foreach (string item in toIdleList)
                 {
+                    pictureBox1.Invoke(new Action(() => {
+                        pictureBox1.Visible = true;
+                        pictureBox1.BackColor = System.Drawing.Color.Black;
+                        pictureBox1.Load("http://cdn.akamai.steamstatic.com/steam/apps/" + item + "/header.jpg");
+                    }));
+                    linkLabel1.Invoke(new Action(() => {
+                        linkLabel1.Links.Clear();
+                        linkLabel1.Text = "Visit " + listView1.FindItemWithText(item).SubItems[2].Text + " Store Page";
+                        linkLabel1.Links.Add(0, linkLabel1.Text.Length, "http://store.steampowered.com/app/" + item);
+                    }));
                     Process.Start(new ProcessStartInfo("steamGameControl.exe", item) { WindowStyle = ProcessWindowStyle.Hidden });
                     int x = 0;
                     Int32.TryParse(domainUpDown1.Text, out x);
+                   
                     if (!checkBox2.Checked)
                     {
                         System.Threading.Thread.Sleep(x);
-                        endAllIdleProcess();
+                        endAllIdleProcess();                        
                     }
                 }
             } while (!checkBox2.Checked);
@@ -108,26 +113,16 @@ namespace steamGameBooster
             }
             else
             {
+                toIdleList.Clear();
+                foreach (ListViewItem item in listView1.Items)
+                {
+                    if(item.Checked)toIdleList.Add(item.SubItems[1].Text);
+                }
+
                 button1.Text = "Stop idleing";
                 threadOne = new ThreadStart(gameIdler);
                 childThread = new Thread(threadOne);
                 childThread.Start();
-            }
-        }
-
-        //when listview item is checked
-        private void listView1_ItemChecked(object sender, ItemCheckedEventArgs e)
-        {
-            foreach (ListViewItem item in listView1.Items)
-            {
-                if (item.Checked)
-                {
-                    toIdleList.Add(item.SubItems[1].Text);
-                }
-                else
-                {
-                    toIdleList.Remove(item.SubItems[1].Text);
-                }
             }
         }
 

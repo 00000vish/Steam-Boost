@@ -20,7 +20,12 @@ namespace steamGameControl
         {
             InitializeComponent();
             pictureBox1.Load("http://cdn.akamai.steamstatic.com/steam/apps/" + id + "/header_292x136.jpg");
-        }     
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
 
