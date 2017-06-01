@@ -16,7 +16,6 @@ namespace steamGameBooster
     public partial class Form1 : Form
     {
         List<string> toIdleList = new List<string>();
-        List<Process> idleProcess = new List<Process>();
 
         ThreadStart threadOne;
         Thread childThread;
@@ -39,37 +38,19 @@ namespace steamGameBooster
             }
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void listView1_ColumnClick(object sender, ColumnClickEventArgs e)
-        {
-
-        }
-
         //kill all the process of idler
         private void endAllIdleProcess()
         {
-            foreach (Process p in idleProcess)
+            foreach (var process in Process.GetProcessesByName("steamGameControl"))
             {
-                if (p != null)
-                {
-                    try { p.Kill(); } catch (Exception e) { }
-                }
+                process.Kill();
             }
         }
 
         private void listView1_DoubleClick(object sender, EventArgs e)
         {
             endAllIdleProcess();
-            idleProcess.Add(Process.Start(new ProcessStartInfo("steamGameControl.exe", listView1.SelectedItems[0].SubItems[1].Text) { WindowStyle = ProcessWindowStyle.Hidden }));
-        }
-
-        public void addGamesToList(Object games)
-        {
-
+            Process.Start(new ProcessStartInfo("steamGameControl.exe", listView1.SelectedItems[0].SubItems[1].Text) { WindowStyle = ProcessWindowStyle.Hidden });
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
@@ -93,6 +74,7 @@ namespace steamGameBooster
                     item.Checked = false;
                 }
             }
+            //todo: it seems like iteams are being added to list more than once 
         }
 
         private void gameIdler()
@@ -101,12 +83,13 @@ namespace steamGameBooster
             {
                 foreach (string item in toIdleList)
                 {
-                    idleProcess.Add(Process.Start(new ProcessStartInfo("steamGameControl.exe", item) { WindowStyle = ProcessWindowStyle.Hidden }));
+                    Process.Start(new ProcessStartInfo("steamGameControl.exe", item) { WindowStyle = ProcessWindowStyle.Hidden });
                     int x = 0;
                     Int32.TryParse(domainUpDown1.Text, out x);
-                    if (!checkBox2.Checked) {
+                    if (!checkBox2.Checked)
+                    {
                         System.Threading.Thread.Sleep(x);
-                        endAllIdleProcess();                       
+                        endAllIdleProcess();
                     }
                 }
             } while (!checkBox2.Checked);
@@ -122,7 +105,7 @@ namespace steamGameBooster
             }
             else
             {
-                button1.Text = "Stop idleing";               
+                button1.Text = "Stop idleing";
                 threadOne = new ThreadStart(gameIdler);
                 childThread = new Thread(threadOne);
                 childThread.Start();
@@ -130,11 +113,11 @@ namespace steamGameBooster
         }
 
         private void listView1_ItemChecked(object sender, ItemCheckedEventArgs e)
-        {            
+        {
             foreach (ListViewItem item in listView1.Items)
             {
                 if (item.Checked)
-                {                    
+                {
                     toIdleList.Add(item.SubItems[1].Text);
                 }
                 else
@@ -142,6 +125,24 @@ namespace steamGameBooster
                     toIdleList.Remove(item.SubItems[1].Text);
                 }
             }
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox2.Checked)
+            {
+                domainUpDown1.Enabled = false;
+            }
+            else
+            {
+                domainUpDown1.Enabled = true;
+
+            }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
