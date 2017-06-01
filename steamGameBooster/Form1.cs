@@ -53,7 +53,7 @@ namespace steamGameBooster
         //kill all the idle process when form program is closing
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (childThread != null)childThread.Abort();
+            if (childThread != null) childThread.Abort();
             endAllIdleProcess();
         }
 
@@ -81,12 +81,12 @@ namespace steamGameBooster
         {
             int v = 0; Int32.TryParse(domainUpDown1.Text, out v);
             v = ((v * 60000));
-            MessageBox.Show(v.ToString() + " " + toIdleList.Count);
-            pictureBox1.Invoke(new Action(() => {
+            pictureBox1.Invoke(new Action(() =>
+            {
                 timer1.Enabled = true;
                 timer1.Interval = v;
                 timer1.Start();
-            }));
+            })); //setup the timer to close
 
             do
             {
@@ -108,12 +108,14 @@ namespace steamGameBooster
                         }));
                     }
                     catch (Exception e) { };
+
                     Process.Start(new ProcessStartInfo("steamGameControl.exe", item) { WindowStyle = ProcessWindowStyle.Hidden });
-                    int x = 0;
-                    Int32.TryParse(domainUpDown1.Text, out x);
-                    if (!checkBox2.Checked)
+
+                    if (!checkBox2.Checked) //simultaneously unlchecked
                     {
-                        System.Threading.Thread.Sleep((x * 60000)/toIdleList.Count);
+                        int x = 0;
+                        Int32.TryParse(domainUpDown1.Text, out x);
+                        System.Threading.Thread.Sleep((x * 60000) / toIdleList.Count);
                         endAllIdleProcess();
                     }
                 }
@@ -149,10 +151,11 @@ namespace steamGameBooster
         {
             if (!checkBox2.Checked)
             {
-                MessageBox.Show(this,"The time you enter will be evenly divided for each game.","Steam Boost",MessageBoxButtons.OK,MessageBoxIcon.Information);
-            }          
+                MessageBox.Show(this, "The time you enter will be evenly divided for each game.", "Steam Boost", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
+        //link label clicked
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start(e.Link.LinkData.ToString());
@@ -175,9 +178,10 @@ namespace steamGameBooster
             //MessageBox.Show(button2.Tag.ToString());
         }
 
+        //stops idling after time is up
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if(button1.Text == "Stop idleing")button1.PerformClick();
+            if (button1.Text == "Stop idleing") button1.PerformClick();
             timer1.Stop();
         }
     }
