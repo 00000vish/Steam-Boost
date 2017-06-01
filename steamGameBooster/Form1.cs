@@ -1,14 +1,7 @@
-﻿using Steamworks;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace steamGameBooster
@@ -69,6 +62,11 @@ namespace steamGameBooster
                 {
                     item.Checked = true;
                 }
+                toIdleList.Clear();
+                foreach (ListViewItem item in listView1.Items)
+                {
+                    toIdleList.Add(item.SubItems[1].Text);
+                }
             }
             else
             {
@@ -76,8 +74,8 @@ namespace steamGameBooster
                 {
                     item.Checked = false;
                 }
+                toIdleList.Clear();
             }
-            //todo: it seems like iteams are being added to list more than once 
         }
 
         //controls the game idleing process
@@ -145,6 +143,11 @@ namespace steamGameBooster
                 domainUpDown1.Enabled = true;
 
             }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

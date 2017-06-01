@@ -30,5 +30,3 @@ namespace steamGameBooster
         }
     }
 }
-
-//idleProcess = Process.Start(new ProcessStartInfo("steam-idle.exe", AppId.ToString()) { WindowStyle = ProcessWindowStyle.Hidden });

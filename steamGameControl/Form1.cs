@@ -16,15 +16,11 @@ namespace steamGameControl
 {
     public partial class Form1 : Form
     {
-        public Form1()
+        public Form1(String id)
         {
             InitializeComponent();
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-           
-        }        
+            pictureBox1.Load("http://cdn.akamai.steamstatic.com/steam/apps/" + id + "/header_292x136.jpg");
+        }     
     }
 }
 
