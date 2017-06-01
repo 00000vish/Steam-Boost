@@ -15,7 +15,6 @@ namespace steamGameControl
         [STAThread]
         static void Main(string[] args)
         {
-            args = new string[] { "gamelist" };
             if (args.Length == 0)
             {
                 MessageBox.Show("Run the main program", "Opps...", MessageBoxButtons.OK, MessageBoxIcon.Information);
