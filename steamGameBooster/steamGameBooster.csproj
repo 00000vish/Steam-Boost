@@ -31,6 +31,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>1496450620__social_media_three.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>steamGameBooster.Program</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Steamworks.NET">
       <HintPath>..\..\steam-idle Source\Steamworks.NET.dll</HintPath>
@@ -80,6 +86,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="1496450620__social_media_three.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

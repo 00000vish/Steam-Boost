@@ -34,7 +34,7 @@ namespace steamGameBooster
         //kill all the process of idler
         private void endAllIdleProcess()
         {
-            foreach (var process in Process.GetProcessesByName(Program.EXTENDER_NAME))
+            foreach (var process in Process.GetProcessesByName(Program.CONTROLLER_NAME))
             {
                 process.Kill();
             }
@@ -109,7 +109,7 @@ namespace steamGameBooster
                     }
                     catch (Exception e) { };
 
-                    Process.Start(new ProcessStartInfo(Program.EXTENDER_NAME + ".exe", item) { WindowStyle = ProcessWindowStyle.Hidden });
+                    Process.Start(new ProcessStartInfo(Program.CONTROLLER_NAME + ".exe", item) { WindowStyle = ProcessWindowStyle.Hidden });
 
                     if (!checkBox2.Checked) //simultaneously unlchecked
                     {
