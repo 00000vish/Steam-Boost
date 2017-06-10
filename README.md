@@ -7,3 +7,6 @@ Idles game for card drops and increases game played time.
 
 # TODO
 Steam game achievements unlock.
+
+# Download
+https://github.com/vishwenga/Steam-Boost/releases
