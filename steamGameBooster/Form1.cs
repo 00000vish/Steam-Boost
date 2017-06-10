@@ -169,13 +169,15 @@ namespace steamGameBooster
         private void button2_Click(object sender, EventArgs e)
         {
             //<TODO>: STEAM UNLOCK ACHIEMENTS!
-            //MessageBox.Show(button2.Tag.ToString());
+            Form f2 = new Form2(button2.Tag.ToString());
+            f2.Show();
         }
 
         private void listView1_DoubleClick(object sender, EventArgs e)
         {
             //<TODO>: STEAM UNLOCK ACHIEMENTS!
-            //MessageBox.Show(button2.Tag.ToString());
+            Form f2 = new Form2(listView1.SelectedItems[0].SubItems[1].Text);
+            f2.Show();
         }
 
         //stops idling after time is up
@@ -183,6 +185,37 @@ namespace steamGameBooster
         {
             if (button1.Text == "Stop idleing") button1.PerformClick();
             timer1.Stop();
+        }
+
+        private void richTextBox1_Click(object sender, EventArgs e)
+        {
+            if(richTextBox1.Text == "Search")
+                richTextBox1.Clear();
+        }
+
+        private void richTextBox1_Leave(object sender, EventArgs e)
+        {
+            richTextBox1.Text = "Search";
+        }
+
+        private void richTextBox1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            foreach (ListViewItem item in listView1.Items)
+            {
+                item.Selected = false;
+            }
+            if(e.KeyChar == 13)
+            {                
+                if (richTextBox1.Text != "Search" && richTextBox1.Text.Length > 3)
+                {
+                    try
+                    {
+                        listView1.FindItemWithText(richTextBox1.Text).Selected = true;
+                        listView1.Select();
+                    }
+                    catch (Exception z) { }
+                }
+            }
         }
     }
 }
