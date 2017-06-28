@@ -66,7 +66,6 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Text = "This might take awhile...";
-            this.Load += new System.EventHandler(this.Form2_Load);
             this.Shown += new System.EventHandler(this.Form2_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -29,9 +29,7 @@ namespace steamGameControl
         public void getGame()
         {
             Environment.SetEnvironmentVariable("SteamAppId", "440");
-            if (!SteamAPI.Init()) {
-                MessageBox.Show("Test");
-            }
+            if (!SteamAPI.Init()) {}
             var games = Program.GetGames();
             SteamAPI.Shutdown();
             string[] gameList = new string[games.Count];
@@ -41,11 +39,6 @@ namespace steamGameControl
             }
             System.IO.File.WriteAllLines("game-list.txt", gameList);
             Application.Exit();
-        }
-
-        private void Form2_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }
