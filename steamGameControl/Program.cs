@@ -38,29 +38,35 @@ namespace steamGameControl
             }
         }
 
+        //public profile
         public static List<Game> GetGames()
         {
             ulong steamId = SteamUser.GetSteamID().m_SteamID;
-            var apiJson = new StreamReader(
-                WebRequest.Create(
-                "http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=006C1D814005AF1CAE4B670EE4B38979&steamid=" + steamId + "&l=english&json")
-                .GetResponse().GetResponseStream()).ReadToEnd();
-            var gamesList = JObject.Parse(apiJson)["response"]["games"].Children().Select(current => current.SelectToken("appid").ToString()).ToList();
-            var list = (from game in gamesList
-                        let json = JObject.Parse(new StreamReader(WebRequest.Create("http://store.steampowered.com/api/appdetails?appids=" + game).GetResponse().GetResponseStream()).ReadToEnd())
-                        where json[game]["success"].Value<bool>()
-                        select new Game()
-                        {
-                            Name = json[game]["data"]["name"].Value<string>(),
-                            ID = Convert.ToUInt64(game)
-                        }).ToList();
-            return list;
+            try
+            {
+                var apiJson = new StreamReader(
+                    WebRequest.Create(
+                    "http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=006C1D814005AF1CAE4B670EE4B38979&steamid=" + steamId + "&l=english&json")
+                    .GetResponse().GetResponseStream()).ReadToEnd();
+                var gamesList = JObject.Parse(apiJson)["response"]["games"].Children().Select(current => current.SelectToken("appid").ToString()).ToList();
+                var list = (from game in gamesList
+                            let json = JObject.Parse(new StreamReader(WebRequest.Create("http://store.steampowered.com/api/appdetails?appids=" + game).GetResponse().GetResponseStream()).ReadToEnd())
+                            where json[game]["success"].Value<bool>()
+                            select new Game(gamesList.Count > 500)
+                            {
+                                Name = json[game]["data"]["name"].Value<string>(),
+                                ID = Convert.ToUInt64(game)
+                            }).ToList();
+                return list;
+            }
+            catch (Exception e) { MessageBox.Show("There was an error getting games from steam, if your profile is private please make it public before using this tool."); Application.Exit(); return null; }            
         }
     }
 }
 
 public class Game
 {
+    public Game(bool large) { if(large) System.Threading.Thread.Sleep(1050); }
     public string Name { get; set; }
     public ulong ID { get; set; }
 }

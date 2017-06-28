@@ -115,8 +115,10 @@ namespace steamGameBooster
                     {
                         int x = 0;
                         Int32.TryParse(domainUpDown1.Text, out x);
-                        System.Threading.Thread.Sleep((x * 60000) / toIdleList.Count);
+                        //System.Threading.Thread.Sleep((x * 60000) / toIdleList.Count);
+                        System.Threading.Thread.Sleep(6000);
                         endAllIdleProcess();
+                        System.Threading.Thread.Sleep(6000);
                     }
                 }
             } while (!checkBox2.Checked);
@@ -151,7 +153,20 @@ namespace steamGameBooster
         {
             if (!checkBox2.Checked)
             {
-                MessageBox.Show(this, "The time you enter will be evenly divided for each game.", "Steam Boost", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                int temp = 0;
+                foreach (ListViewItem item in listView1.Items)
+                {
+                    if (item.Checked) temp++;
+                }
+                if (temp > 4)
+                {
+                    MessageBox.Show(this, "Make sure the game has been idle simultaneously for atleast 2 hours before idling unsimultaneously.", "Steam Boost", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show(this, "Make sure you have atleast 5 games selected to quickly switch between and make sure the game has been idle simultaneously for atleast 2 hours.", "Steam Boost", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    checkBox2.Checked = true;
+                }                
             }
         }
 
@@ -205,17 +220,24 @@ namespace steamGameBooster
                 item.Selected = false;
             }
             if(e.KeyChar == 13)
-            {                
-                if (richTextBox1.Text != "Search" && richTextBox1.Text.Length > 3)
+            {
+                if (richTextBox1.Text != "Search" && richTextBox1.Text.Length > 2)
                 {
                     try
                     {
                         listView1.FindItemWithText(richTextBox1.Text).Selected = true;
                         listView1.Select();
+                        listView1.EnsureVisible(listView1.Items.IndexOf( listView1.SelectedItems[0]));
                     }
                     catch (Exception z) { }
                 }
             }
+        }
+
+        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.IO.File.Delete(Program.GAME_LIST_FILE);
+            Application.Restart();
         }
     }
 }

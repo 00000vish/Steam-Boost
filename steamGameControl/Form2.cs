@@ -29,7 +29,9 @@ namespace steamGameControl
         public void getGame()
         {
             Environment.SetEnvironmentVariable("SteamAppId", "440");
-            if (!SteamAPI.Init()) { }
+            if (!SteamAPI.Init()) {
+                MessageBox.Show("Test");
+            }
             var games = Program.GetGames();
             SteamAPI.Shutdown();
             string[] gameList = new string[games.Count];
