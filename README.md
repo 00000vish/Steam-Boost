@@ -1,5 +1,5 @@
 # Steam Boost 
-Idles game for card drops and increases game played time.
+Idles game for card drops and increases game played time. NO LOGIN REQUIRED! just need to make your steam profile public.
 
 
 ![App](http://i.imgur.com/2tVXQjZ.png)
