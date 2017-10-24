@@ -66,7 +66,7 @@ namespace steamGameControl
 
 public class Game
 {
-    public Game(bool large) { if(large) System.Threading.Thread.Sleep(1050); }
+    public Game(bool large) { if(large) System.Threading.Thread.Sleep(1050); System.Threading.Thread.Sleep(500); }
     public string Name { get; set; }
     public ulong ID { get; set; }
 }
