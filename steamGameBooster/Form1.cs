@@ -36,7 +36,16 @@ namespace steamGameBooster
         {
             foreach (var process in Process.GetProcessesByName(Program.CONTROLLER_FILE.Split('.')[0]))
             {
-                process.Kill();
+                try
+                {
+                    process.Kill();
+                }
+                catch (Exception e)
+                {
+
+                    MessageBox.Show(e.ToString());
+                }
+
             }
             try
             {
@@ -79,57 +88,70 @@ namespace steamGameBooster
         //controls the game idleing process
         private void gameIdler()
         {
+            int methodSwitch = 0;
             int v = 0; Int32.TryParse(domainUpDown1.Text, out v);
             v = ((v * 60000));
             pictureBox1.Invoke(new Action(() =>
             {
                 timer1.Enabled = true;
                 timer1.Interval = v;
-                timer1.Start();
-            })); //setup the timer to close
+                timer1.Start();  //setup the timer to close
 
-            do
-            {
-                foreach (string item in toIdleList)
+
+                if (comboBox1.SelectedIndex == 1)
                 {
-                    try
-                    {
-                        pictureBox1.Invoke(new Action(() =>
-                        {
-                            button2.Tag = item;
-                            groupBox2.Visible = true;
-                            pictureBox1.BackColor = System.Drawing.Color.Black;
-                            pictureBox1.Load("http://cdn.akamai.steamstatic.com/steam/apps/" + item + "/header.jpg");
-                            linkLabel1.Links.Clear();
-                            string gameName = listView1.FindItemWithText(item).SubItems[2].Text;
-                            linkLabel1.Text = "Visit Store Page for " + gameName;
-                            if (gameName.Length > 11) linkLabel1.Text = "Visit Store Page for " + gameName.Substring(0, 12) + Environment.NewLine + gameName.Substring(11, gameName.Length - 11);
-                            linkLabel1.Links.Add(0, linkLabel1.Text.Length, "http://store.steampowered.com/app/" + item);
-                        }));
-                    }
-                    catch (Exception e) { };
-
-                    Process.Start(new ProcessStartInfo(Program.CONTROLLER_FILE, item) { WindowStyle = ProcessWindowStyle.Hidden });
-
-                    if (!checkBox2.Checked) //simultaneously unlchecked
-                    {
-                        int x = 0;
-                        Int32.TryParse(domainUpDown1.Text, out x);
-                        //System.Threading.Thread.Sleep((x * 60000) / toIdleList.Count);
-                        System.Threading.Thread.Sleep(6000);
-                        endAllIdleProcess();
-                        System.Threading.Thread.Sleep(6000);
-                    }
+                    methodSwitch = 1;
                 }
-            } while (!checkBox2.Checked);
+
+            }));
+            if (methodSwitch == 1)
+            {
+                do
+                {
+                    gameIdlerWorker();
+                    System.Threading.Thread.Sleep(5000);
+                    endAllIdleProcess();
+                    System.Threading.Thread.Sleep(3000);
+
+                } while (true);
+            }
+            else
+            {
+                gameIdlerWorker();
+            }
+        }
+
+        //starts the gamecontoller.exe and sets the image
+        private void gameIdlerWorker()
+        {
+            foreach (string item in toIdleList)
+            {
+                try
+                {
+                    pictureBox1.Invoke(new Action(() =>
+                    {
+                        button2.Tag = item;
+                        groupBox2.Visible = true;
+                        pictureBox1.BackColor = System.Drawing.Color.Black;
+                        pictureBox1.Load("http://cdn.akamai.steamstatic.com/steam/apps/" + item + "/header.jpg");
+                        linkLabel1.Links.Clear();
+                        string gameName = listView1.FindItemWithText(item).SubItems[2].Text;
+                        linkLabel1.Text = "Visit Store Page for " + gameName;
+                        if (gameName.Length > 11) linkLabel1.Text = "Visit Store Page for " + gameName.Substring(0, 11) + Environment.NewLine + gameName.Substring(11, gameName.Length - 11);
+                        linkLabel1.Links.Add(0, linkLabel1.Text.Length, "http://store.steampowered.com/app/" + item);
+                    }));
+                }
+                catch (Exception e) { };
+                Process.Start(new ProcessStartInfo(Program.CONTROLLER_FILE, item) { WindowStyle = ProcessWindowStyle.Hidden });
+            }
         }
 
         //start idleing button
         private void button1_Click(object sender, EventArgs e)
         {
-            if (button1.Text == "Stop idleing")
+            if (button1.Text == "Stop Engine")
             {
-                button1.Text = "Start idleing";
+                button1.Text = "Start Engine";
                 endAllIdleProcess();
                 childThread.Abort();
             }
@@ -141,32 +163,10 @@ namespace steamGameBooster
                     if (item.Checked) toIdleList.Add(item.SubItems[1].Text);
                 }
 
-                button1.Text = "Stop idleing";
+                button1.Text = "Stop Engine";
                 threadOne = new ThreadStart(gameIdler);
                 childThread = new Thread(threadOne);
                 childThread.Start();
-            }
-        }
-
-        //when simultaneously is checked
-        private void checkBox2_CheckedChanged(object sender, EventArgs e)
-        {
-            if (!checkBox2.Checked)
-            {
-                int temp = 0;
-                foreach (ListViewItem item in listView1.Items)
-                {
-                    if (item.Checked) temp++;
-                }
-                if (temp > 4)
-                {
-                    MessageBox.Show(this, "Make sure the game has been idle simultaneously for atleast 2 hours before idling unsimultaneously.", "Steam Boost", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else
-                {
-                    MessageBox.Show(this, "Make sure you have atleast 5 games selected to quickly switch between and make sure the game has been idle simultaneously for atleast 2 hours.", "Steam Boost", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    checkBox2.Checked = true;
-                }                
             }
         }
 
@@ -178,7 +178,7 @@ namespace steamGameBooster
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //nothing
+            comboBox1.SelectedIndex = 0;
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -204,7 +204,7 @@ namespace steamGameBooster
 
         private void richTextBox1_Click(object sender, EventArgs e)
         {
-            if(richTextBox1.Text == "Search")
+            if (richTextBox1.Text == "Search")
                 richTextBox1.Clear();
         }
 
@@ -219,7 +219,7 @@ namespace steamGameBooster
             {
                 item.Selected = false;
             }
-            if(e.KeyChar == 13)
+            if (e.KeyChar == 13)
             {
                 if (richTextBox1.Text != "Search" && richTextBox1.Text.Length > 2)
                 {
@@ -227,7 +227,7 @@ namespace steamGameBooster
                     {
                         listView1.FindItemWithText(richTextBox1.Text).Selected = true;
                         listView1.Select();
-                        listView1.EnsureVisible(listView1.Items.IndexOf( listView1.SelectedItems[0]));
+                        listView1.EnsureVisible(listView1.Items.IndexOf(listView1.SelectedItems[0]));
                     }
                     catch (Exception z) { }
                 }
@@ -238,6 +238,11 @@ namespace steamGameBooster
         {
             System.IO.File.Delete(Program.GAME_LIST_FILE);
             Application.Restart();
+        }
+
+        private void linkLabel3_MouseClick(object sender, MouseEventArgs e)
+        {
+            MessageBox.Show("Idler simply idles all games, but still drops cards. Card Dropper open and closes the game to make the cards drop faster, however to Card Dropper to work game need to be idle for 2 hours atleast.","Steam Booster",MessageBoxButtons.OK,MessageBoxIcon.Asterisk);
         }
     }
 }

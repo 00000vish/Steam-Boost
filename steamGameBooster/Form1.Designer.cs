@@ -36,8 +36,9 @@
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.linkLabel3 = new System.Windows.Forms.LinkLabel();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.button1 = new System.Windows.Forms.Button();
             this.domainUpDown1 = new System.Windows.Forms.DomainUpDown();
             this.label1 = new System.Windows.Forms.Label();
@@ -88,7 +89,7 @@
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(16, 26);
+            this.checkBox1.Location = new System.Drawing.Point(463, 16);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(104, 17);
             this.checkBox1.TabIndex = 1;
@@ -98,18 +99,40 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.comboBox1);
+            this.groupBox1.Controls.Add(this.linkLabel3);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.checkBox2);
             this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.domainUpDown1);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.checkBox1);
             this.groupBox1.Location = new System.Drawing.Point(505, 437);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(232, 118);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Game Idle";
+            // 
+            // linkLabel3
+            // 
+            this.linkLabel3.AutoSize = true;
+            this.linkLabel3.Location = new System.Drawing.Point(16, 27);
+            this.linkLabel3.Name = "linkLabel3";
+            this.linkLabel3.Size = new System.Drawing.Size(94, 13);
+            this.linkLabel3.TabIndex = 9;
+            this.linkLabel3.TabStop = true;
+            this.linkLabel3.Text = "Select Engine (?) :";
+            this.linkLabel3.MouseClick += new System.Windows.Forms.MouseEventHandler(this.linkLabel3_MouseClick);
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "Idler",
+            "Card Dropper"});
+            this.comboBox1.Location = new System.Drawing.Point(111, 24);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(105, 21);
+            this.comboBox1.TabIndex = 8;
             // 
             // label2
             // 
@@ -120,26 +143,13 @@
             this.label2.TabIndex = 7;
             this.label2.Text = "mins";
             // 
-            // checkBox2
-            // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Checked = true;
-            this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox2.Location = new System.Drawing.Point(120, 26);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(96, 17);
-            this.checkBox2.TabIndex = 6;
-            this.checkBox2.Text = "Simultaneously";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
-            // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(16, 80);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(200, 23);
             this.button1.TabIndex = 5;
-            this.button1.Text = "Start Idleing";
+            this.button1.Text = "Start Engine";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -187,9 +197,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(16, 55);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(89, 13);
+            this.label1.Size = new System.Drawing.Size(92, 13);
             this.label1.TabIndex = 3;
-            this.label1.Text = "Stop idleing after:";
+            this.label1.Text = "Stop Engine after:";
             // 
             // groupBox2
             // 
@@ -270,12 +280,14 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(749, 564);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.linkLabel2);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.listView1);
             this.Controls.Add(this.groupBox2);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "Steam Boost";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
@@ -301,7 +313,6 @@
         private System.Windows.Forms.DomainUpDown domainUpDown1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PictureBox pictureBox1;
@@ -310,6 +321,8 @@
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.LinkLabel linkLabel2;
+        private System.Windows.Forms.LinkLabel linkLabel3;
+        private System.Windows.Forms.ComboBox comboBox1;
     }
 }
 
