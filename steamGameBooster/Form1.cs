@@ -198,7 +198,7 @@ namespace steamGameBooster
         //stops idling after time is up
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if (button1.Text == "Stop idleing") button1.PerformClick();
+            if (button1.Text == "Stop Engine") button1.PerformClick();
             timer1.Stop();
         }
 
