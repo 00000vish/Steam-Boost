@@ -56,7 +56,7 @@ namespace steamGameBooster
                     linkLabel1.Text = "";
                 }));
             }
-            catch (Exception e) { };
+            catch (Exception) { };
         }
 
         //kill all the idle process when form program is closing
@@ -141,7 +141,7 @@ namespace steamGameBooster
                         linkLabel1.Links.Add(0, linkLabel1.Text.Length, "http://store.steampowered.com/app/" + item);
                     }));
                 }
-                catch (Exception e) { };
+                catch (Exception) { };
                 Process.Start(new ProcessStartInfo(Program.CONTROLLER_FILE, item) { WindowStyle = ProcessWindowStyle.Hidden });
             }
         }
@@ -229,7 +229,7 @@ namespace steamGameBooster
                         listView1.Select();
                         listView1.EnsureVisible(listView1.Items.IndexOf(listView1.SelectedItems[0]));
                     }
-                    catch (Exception z) { }
+                    catch (Exception) { }
                 }
             }
         }
@@ -242,7 +242,7 @@ namespace steamGameBooster
 
         private void linkLabel3_MouseClick(object sender, MouseEventArgs e)
         {
-            MessageBox.Show("Idler simply idles all games, but still drops cards. Card Dropper open and closes the game to make the cards drop faster, however to Card Dropper to work game need to be idle for 2 hours atleast.","Steam Booster",MessageBoxButtons.OK,MessageBoxIcon.Asterisk);
+            MessageBox.Show("Idler simply idles all games, but still drops cards. Card Dropper open and closes the game to make the cards drop faster, however for Card Dropper to work game need to be idle for 2 hours atleast.","Steam Booster",MessageBoxButtons.OK,MessageBoxIcon.Asterisk);
         }
     }
 }

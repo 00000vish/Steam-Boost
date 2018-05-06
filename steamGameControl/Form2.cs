@@ -1,5 +1,6 @@
 ﻿using Steamworks;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -30,15 +31,28 @@ namespace steamGameControl
         {
             Environment.SetEnvironmentVariable("SteamAppId", "440");
             if (!SteamAPI.Init()) {}
-            var games = Program.GetGames();
+            ArrayList games = Program.GetGames();
             SteamAPI.Shutdown();
             string[] gameList = new string[games.Count];
             for (int i = 0; i < games.Count; i++)
             {
-                gameList[i] = games[i].ID + "`" + games[i].Name;
+                Game item = (Game)games[i];
+                gameList[i] = item.Id + "`" + item.Name;
             }
             System.IO.File.WriteAllLines("game-list.txt", gameList);
             Application.Exit();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            Size = new Size(516, 338);
+            label1.Text = "Getting games from steam... [" + Program.UIname + "]";
+            Text = "This might take awhile... [" + Program.UIindex + "/" + Program.UItotal + "]";
+            try
+            {
+                pictureBox1.Load("http://cdn.akamai.steamstatic.com/steam/apps/" + Program.UIappid + "/header.jpg");
+            }
+            catch (Exception){}
         }
     }
 }
