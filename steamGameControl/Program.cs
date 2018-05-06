@@ -17,7 +17,6 @@ namespace steamGameControl
         [STAThread]
         static void Main(string[] args)
         {
-            checkSteam();
             if (args.Length == 0)
             {
                 MessageBox.Show("Run the main program", "Opps...", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -45,23 +44,6 @@ namespace steamGameControl
         public static string UIappid = "";
         public static string UItotal = "";
         public static int  UIindex = 0;
-
-
-        public static void checkSteam()
-        {
-            try
-            {
-                Environment.SetEnvironmentVariable("SteamAppId", "440");
-                if (!SteamAPI.Init()) { }
-                ulong steamId = SteamUser.GetSteamID().m_SteamID;
-            }
-            catch(Exception)
-            {
-                MessageBox.Show("Steam not running or something went wrong :/");
-                Environment.Exit(0);
-            }
-
-        }
 
         //public profile
         public static ArrayList GetGames()
