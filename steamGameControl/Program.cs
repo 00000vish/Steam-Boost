@@ -46,7 +46,7 @@ namespace steamGameControl
         public static string UItotal = "";
         public static int  UIindex = 0;
 
-
+        //check if steam is running
         public static void checkSteam()
         {
             try
