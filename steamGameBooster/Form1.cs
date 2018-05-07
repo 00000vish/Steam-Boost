@@ -183,16 +183,14 @@ namespace steamGameBooster
 
         private void button2_Click(object sender, EventArgs e)
         {
-            //<TODO>: STEAM UNLOCK ACHIEMENTS!
-            Form f2 = new Form2(button2.Tag.ToString());
-            f2.Show();
-        }
-
-        private void listView1_DoubleClick(object sender, EventArgs e)
-        {
-            //<TODO>: STEAM UNLOCK ACHIEMENTS!
-            Form f2 = new Form2(listView1.SelectedItems[0].SubItems[1].Text);
-            f2.Show();
+            try
+            {
+                ProcessStartInfo startInfo = new ProcessStartInfo();
+                startInfo.FileName = @"SAM.Game.exe";
+                startInfo.Arguments = button2.Tag.ToString();
+                Process.Start(startInfo);
+            }
+            catch (Exception) { }
         }
 
         //stops idling after time is up
@@ -243,6 +241,28 @@ namespace steamGameBooster
         private void linkLabel3_MouseClick(object sender, MouseEventArgs e)
         {
             MessageBox.Show("Idler simply idles all games, but still drops cards. Card Dropper open and closes the game to make the cards drop faster, however for Card Dropper to work game need to be idle for 2 hours atleast.","Steam Booster",MessageBoxButtons.OK,MessageBoxIcon.Asterisk);
+        }
+
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            startSAM();
+        }
+
+        public void startSAM()
+        {
+            try
+            {
+                button2.Tag = listView1.SelectedItems[0].SubItems[1].Text;
+                groupBox2.Visible = true;
+                pictureBox1.BackColor = System.Drawing.Color.Black;
+                pictureBox1.Load("http://cdn.akamai.steamstatic.com/steam/apps/" + button2.Tag + "/header.jpg");
+                linkLabel1.Links.Clear();
+                string gameName = listView1.SelectedItems[0].SubItems[2].Text;
+                linkLabel1.Text = "Visit Store Page for " + gameName;
+                if (gameName.Length > 11) linkLabel1.Text = "Visit Store Page for " + gameName.Substring(0, 11) + Environment.NewLine + gameName.Substring(11, gameName.Length - 11);
+                linkLabel1.Links.Add(0, linkLabel1.Text.Length, "http://store.steampowered.com/app/" + button2.Tag);
+            }
+            catch (Exception e) { MessageBox.Show("zzzzzzz" + e.ToString());}
         }
     }
 }
