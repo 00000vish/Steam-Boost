@@ -9,6 +9,7 @@ Unlock achievements and Idles game for card drops and increases game played time
 ![App](https://i.imgur.com/jMutizS.png)
 
 ![App](https://i.imgur.com/oUWOWiC.png)
+
 Make sure your profiles privacy settings set to public like the picture above.
 
 # Download
