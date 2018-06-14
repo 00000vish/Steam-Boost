@@ -9,6 +9,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Collections;
+using System.Threading;
 
 namespace steamGameControl
 {
@@ -90,6 +91,8 @@ namespace steamGameControl
                         UIappid = item.appid;
                         gameList.Add(new Game { Name = gameJsonList[item.appid].data.name, Id = item.appid });                        
                     }
+
+                    Thread.Sleep(1200); 
                 }
                 return gameList;
             }
