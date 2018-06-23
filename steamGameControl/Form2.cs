@@ -17,6 +17,8 @@ namespace steamGameControl
     {
         public Form2()
         {
+            if (Program.asBot)
+                Program.checkSteam();
             InitializeComponent();
         }
 
@@ -29,8 +31,12 @@ namespace steamGameControl
 
         public void getGame()
         {
-            Environment.SetEnvironmentVariable("SteamAppId", "440");
-            if (!SteamAPI.Init()) {}
+            if (!Program.asBot)
+            {
+                Environment.SetEnvironmentVariable("SteamAppId", "440");
+                if (!SteamAPI.Init()) { }
+            }
+        
             ArrayList games = Program.GetGames();
             SteamAPI.Shutdown();
             string[] gameList = new string[games.Count];
@@ -39,7 +45,14 @@ namespace steamGameControl
                 Game item = (Game)games[i];
                 gameList[i] = item.Id + "`" + item.Name;
             }
-            System.IO.File.WriteAllLines("game-list.txt", gameList);
+            if (Program.asBot)
+            {
+                System.IO.File.WriteAllLines("bot-game-list.txt", gameList);
+            }
+            else
+            {
+                System.IO.File.WriteAllLines("game-list.txt", gameList);
+            }
             Application.Exit();
         }
 

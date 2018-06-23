@@ -18,13 +18,23 @@ namespace steamGameControl
         [STAThread]
         static void Main(string[] args)
         {
-            checkSteam();
+            ServicePointManager.Expect100Continue = true;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+         
             if (args.Length == 0)
             {
                 MessageBox.Show("Run the main program", "Opps...", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else if (args[0] == "gamelist")
             {
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(new Form2());
+            }
+            else if (args[0] == "botgamelist")
+            {
+                asBot = true;
+                ulong.TryParse(args[1], out steamId);
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(new Form2());
@@ -41,6 +51,9 @@ namespace steamGameControl
                 Application.Run(new Form1(args[0]));
             }
         }
+
+        private static ulong steamId = 0;
+        public static bool asBot = false;
 
         public static string UIname = "";
         public static string UIappid = "";
@@ -68,7 +81,11 @@ namespace steamGameControl
         //public profile
         public static ArrayList GetGames()
         {
-            ulong steamId = SteamUser.GetSteamID().m_SteamID;
+            if (!asBot)
+            {
+                steamId = SteamUser.GetSteamID().m_SteamID;
+            }
+            
             try
             {
                 var apiJson = new StreamReader(WebRequest.Create("http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=006C1D814005AF1CAE4B670EE4B38979&steamid=" + steamId + "&l=english&json").GetResponse().GetResponseStream()).ReadToEnd();

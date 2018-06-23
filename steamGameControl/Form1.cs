@@ -18,6 +18,8 @@ namespace steamGameControl
     {
         public Form1(String id)
         {
+            if(Program.asBot)
+                Program.checkSteam();
             InitializeComponent();
             pictureBox1.Load("http://cdn.akamai.steamstatic.com/steam/apps/" + id + "/header_292x136.jpg");
         }
