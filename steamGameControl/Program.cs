@@ -15,6 +15,14 @@ namespace steamGameControl
 {
     static class Program
     {
+        private static ulong steamId = 0;
+        public static bool asBot = false;
+        public static string steamUsername = null;
+        public static string UIname = "";
+        public static string UIappid = "";
+        public static string UItotal = "";
+        public static int UIindex = 0;
+
         [STAThread]
         static void Main(string[] args)
         {
@@ -35,6 +43,10 @@ namespace steamGameControl
             {
                 asBot = true;
                 ulong.TryParse(args[1], out steamId);
+                if (args.Length > 2)
+                {                   
+                    steamUsername = args[2];
+                }                
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(new Form2());
@@ -51,14 +63,6 @@ namespace steamGameControl
                 Application.Run(new Form1(args[0]));
             }
         }
-
-        private static ulong steamId = 0;
-        public static bool asBot = false;
-
-        public static string UIname = "";
-        public static string UIappid = "";
-        public static string UItotal = "";
-        public static int  UIindex = 0;
 
         //check if steam is running
         public static void checkSteam()

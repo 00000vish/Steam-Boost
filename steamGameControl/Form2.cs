@@ -45,9 +45,9 @@ namespace steamGameControl
                 Game item = (Game)games[i];
                 gameList[i] = item.Id + "`" + item.Name;
             }
-            if (Program.asBot)
+            if (Program.asBot && Program.steamUsername != null)
             {
-                System.IO.File.WriteAllLines("bot-game-list.txt", gameList);
+                System.IO.File.WriteAllLines(Program.steamUsername + "-game-list.txt", gameList);
             }
             else
             {
