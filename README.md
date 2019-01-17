@@ -13,5 +13,3 @@ Unlock achievements and Idles game for card drops and increases game played time
 Make sure your profiles privacy settings set to public like the picture above.
 
 # Download
-https://github.com/vishwenga/Steam-Boost/releases
-
